@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   public form: FormGroup;
   public calls = [];
   public notifications;
+  public totalNotification;
   private userName = 'Alan';
   private date = '2017-12-07T12:06:07.257Z';
   private message = { post: 'Atendimento Criado por ', put: 'Atendimento Alterado por ' };
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.getCalls();
+    this.totalNotifications();
   }
 
   createForm() {
@@ -33,8 +35,18 @@ export class AppComponent implements OnInit {
 
   getCalls() {
     this.appService.getAllCalls().subscribe(res => this.calls = res);
+  }
+
+  getAllNotifications () {
+    this.appService.getAllNotification().subscribe(res => this.notifications = res);
+  }
+  totalNotifications () {
     this.appService.getAllNotification().subscribe(res => {
-      this.notifications = res
+      if (res.length > 9) {
+        this.totalNotification = '9+';
+      }else {
+        this.totalNotification = res.length;
+      }
     });
   }
 
@@ -56,7 +68,9 @@ export class AppComponent implements OnInit {
       message: this.message.post,
       id_atendimento: value.id,
       userCreate: value.createdBy,
-      date: value.createdAt
+      date: value.createdAt,
+      alert: 'alert-success',
+      title: value.title
     };
     this.appService.postNotification(modifyNotification).subscribe(res => console.log(res));
   }
