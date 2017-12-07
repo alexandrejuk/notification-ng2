@@ -34,11 +34,7 @@ export class AppComponent implements OnInit {
   getCalls() {
     this.appService.getAllCalls().subscribe(res => this.calls = res);
     this.appService.getAllNotification().subscribe(res => {
-      if (res.length > 9) {
-        this.notifications = '9+';
-      }else {
-        this.notifications = res.length;
-      }
+      this.notifications = res
     });
   }
 

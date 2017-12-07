@@ -11,12 +11,17 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-  <div class="row mt-3">
-    <div class="col-3">
+  <div class="mt-3">
+  <p>
+      <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        {{notifications.length || 0}} notificações
+      </button>
+    </p>
+    <div id="collapseExample" [ngbCollapse]="isCollapsed">
       <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Notificação {{ notifications }}</h4>
-          <p class="card-text"></p>
+        <div class="card-body" *ngFor="let n of notifications">
+         {{ n.message }} {{ n.userCreate }} {{ n.date }}
         </div>
       </div>
     </div>
