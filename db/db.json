@@ -1,56 +1,8 @@
 {
   "calls": [
-    {
-      "id": 1,
-      "title": "Error no Sistema de Ponto",
-      "message": "Sistema na traz as marcações de ponto",
-      "createdBy": "Alan",
-      "createdAt": "2017-12-07T12:06:07.257Z",
-      "updatedBy": "Alan",
-      "updatedAt": "2017-12-07T12:06:07.257Z"  },
-    {
-      "id": 2,
-      "title": "Relogio Parou de Funcionar",
-      "message": "Equipamento não liga parou de funcionar",
-      "createdBy": "Alan",
-      "createdAt": "2017-12-07T12:06:07.257Z",
-      "updatedBy": "Alan",
-      "updatedAt": "2017-12-07T12:06:07.257Z"  },
-    {
-      "id": 3,
-      "title": "Treinamento do sistema",
-      "message": "Instalação e treinamento sistema ponto secullum 4",
-      "createdBy": "Alan",
-      "createdAt": "2017-12-07T12:06:07.257Z",
-      "updatedBy": "Alan",
-      "updatedAt": "2017-12-07T12:06:07.257Z"  },
-    {
-      "id": 4,
-      "title": "Conserta module rp",
-      "message": "Modulo sem comunicação",
-      "createdBy": "Alan",
-      "createdAt": "2017-12-07T12:06:07.257Z",
-      "updatedBy": "Alan",
-      "updatedAt": "2017-12-07T12:06:07.257Z"  }
+
   ],
   "notification": [
-    { "id": 1,
-      "id_atendimento": 1,
-      "userCreate":"Alan",
-      "message":"Atendimento criado por por Alan",
-      "date": "2017-12-07T12:06:07.257Z"
-    },
-    { "id": 2,
-      "id_atendimento": 1,
-      "userCreate":"Alan",
-      "message":"Atendimento alterado por por Alan",
-      "date": "2017-12-07T12:06:07.257Z"
-    },
-    { "id": 3,
-      "id_atendimento": 3,
-      "userCreate":"Alan",
-      "message":"Atendimento criado por por Alan",
-      "date": "2017-12-07T12:06:07.257Z"
-    }
+
   ]
 }

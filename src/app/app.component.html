@@ -15,13 +15,36 @@
     <div class="col-3">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Notificação 01</h4>
-          <p class="card-text">Usuário Rafael Neves criou um atendimento.</p>
+          <h4 class="card-title">Notificação {{ notifications }}</h4>
+          <p class="card-text"></p>
         </div>
       </div>
     </div>
   </div>
 
-  <p>Form value: {{ form.value | json }}</p>
-  
+  <div class="row mt-4">
+    <div class="col-12">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Message</th>
+            <th scope="col">CreatedBy</th>
+            <th scope="col">CreatedAt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let call of calls">
+            <th scope="row">{{ call.id }}</th>
+            <td>{{ call.title }}</td>
+            <td>{{ call.message }}</td>
+            <td>{{ call.createdBy }}</td>
+            <td>{{ call.createdAt }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>

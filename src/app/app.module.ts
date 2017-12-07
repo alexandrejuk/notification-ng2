@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { HttpModule } from '@angular/http'
+import { AppService } from './app.service';
+
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,7 @@ import { HttpModule } from '@angular/http'
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
