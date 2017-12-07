@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,9 @@ import { AppService } from './app.service';
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    NgbModule,
+    NgbModule.forRoot()
   ],
   providers: [AppService],
   bootstrap: [AppComponent]
