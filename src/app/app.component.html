@@ -23,7 +23,7 @@
         <div *ngIf="notifications?.length">
           <div *ngFor="let notification of notifications; let i=index">
             <div [ngClass]="{'alert': true, 'alert-success': n?.alert === 'alert-success', 'alert-danger': n?.alert === 'alert-danger', 'alert-warning': n?.alert === 'alert-warning'}"
-              role="alert" *ngIf="i < 6">
+              role="alert">
               {{ notification?.message }}
               {{ notification?.tipo }} -
               {{notification?.title}}
