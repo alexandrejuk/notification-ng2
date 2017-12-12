@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import * as io from 'socket.io-client';
 
 @Injectable()
 export class AppService {
+
   private endpointApi = 'http://localhost:3000';
+
   constructor(private http: Http) {}
 
   getAllCalls(): Observable<any[]> {
@@ -13,6 +16,7 @@ export class AppService {
       .get(`${this.endpointApi}/calls`)
       .map(res => res.json() as any[]);
   }
+
   postCall(call): Observable<any> {
     return this.http
       .post(`${this.endpointApi}/calls`, call)
@@ -24,9 +28,11 @@ export class AppService {
       .get(`${this.endpointApi}/notification`)
       .map(res => res.json() as any[]);
   }
+
   postNotification(notification): Observable<any> {
     return this.http
       .post(`${this.endpointApi}/notification`, notification)
       .map(res => res.json() as any);
   }
+
 }
