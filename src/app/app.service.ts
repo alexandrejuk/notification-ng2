@@ -8,31 +8,31 @@ import * as io from 'socket.io-client';
 export class AppService {
 
   private endpointApi = 'http://localhost:3000';
+  private socket;
 
   constructor(private http: Http) {}
 
-  getAllCalls(): Observable<any[]> {
-    return this.http
-      .get(`${this.endpointApi}/calls`)
-      .map(res => res.json() as any[]);
-  }
-
-  postCall(call): Observable<any> {
-    return this.http
-      .post(`${this.endpointApi}/calls`, call)
-      .map(res => res.json() as any);
-  }
-
-  getAllNotification(): Observable<any[]> {
-    return this.http
-      .get(`${this.endpointApi}/notification`)
-      .map(res => res.json() as any[]);
-  }
-
   postNotification(notification): Observable<any> {
+    const urlApi = `${this.endpointApi}/api/notifications`;
     return this.http
-      .post(`${this.endpointApi}/notification`, notification)
+      .post(urlApi, notification)
       .map(res => res.json() as any);
   }
 
+  sendNotification(notification) {
+    this.socket.emit('new-notification', notification);
+  }
+
+  getNotifications() {
+    const observable = new Observable(observer => {
+      this.socket = io(this.endpointApi);
+      this.socket.on('notigication', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
 }

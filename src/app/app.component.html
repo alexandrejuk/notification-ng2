@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+  <form [formGroup]="form" (ngSubmit)="newNotification(form.value)" novalidate>
     <div class="form-group">
       <label for="FormsModule">Title</label>
       <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title">
@@ -13,22 +13,24 @@
 
   <div class="mt-3">
     <p>
-      <button type="button" class="btn btn-outline-primary"
-      (click)="isCollapsed = !isCollapsed; getAllNotifications()"
-      [attr.aria-expanded]="!isCollapsed"
-      aria-controls="collapseExample">
-        {{ totalNotification || 0}} notificações
+      <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseExample">
+        {{ notifications.length || 0}} notificações
       </button>
     </p>
     <div id="collapseExample" [ngbCollapse]="!isCollapsed">
       <div class="card">
         <div *ngIf="notifications?.length">
-          <div *ngFor="let n of notifications; let i=index">
-          <div [ngClass]="{'alert': true, 'alert-success': n?.alert === 'alert-success', 'alert-danger': n?.alert === 'alert-danger', 'alert-warning': n?.alert === 'alert-warning'}" role="alert" *ngIf="i < 6">
-             {{ n.message }} {{ n.tipo }} para {{n.title}} por 
-             <a href="#" class="alert-link">{{ n.userCreate }}
-             </a> às <a href="#" class="alert-link">{{ n.date | date: "dd/MM/yyyy hh:mm"}} </a>.
-          </div>
+          <div *ngFor="let notification of notifications; let i=index">
+            <div [ngClass]="{'alert': true, 'alert-success': n?.alert === 'alert-success', 'alert-danger': n?.alert === 'alert-danger', 'alert-warning': n?.alert === 'alert-warning'}"
+              role="alert" *ngIf="i < 6">
+              {{ notification?.message }}
+              {{ notification?.tipo }} -
+              {{notification?.title}}
+              <a href="#" class="alert-link">
+                {{ notification?.date | date: "dd/MM/yyyy hh:mm"}}
+              </a>
+            </div>
 
           </div>
           <p>
@@ -45,29 +47,6 @@
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-12">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Message</th>
-            <th scope="col">CreatedBy</th>
-            <th scope="col">CreatedAt</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let call of calls">
-            <th scope="row">{{ call.id }}</th>
-            <td>{{ call.title }}</td>
-            <td>{{ call.message }}</td>
-            <td>{{ call.createdBy }}</td>
-            <td>{{ call.createdAt | date: "dd/MM/yyyy hh:mm" }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+
 
 </div>
