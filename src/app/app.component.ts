@@ -13,15 +13,17 @@ export class AppComponent implements OnInit, OnDestroy {
   private date = '2017-12-07T12:06:07.257Z';
   private groups = ['5a2fab1905ec6e12748e461a', '5a2fab2b05ec6e12748e461d'];
   private connection;
-  public notifications = [];
+  public notifications;
 
   constructor(private fb: FormBuilder, private appService: AppService) {}
 
   ngOnInit() {
     this.createForm();
-    this.connection = this.appService.getNotifications().subscribe(ntification => {
-      this.notifications.push(ntification);
+    this.appService.sendUser({ id: '2', name: 'alexandre'});
+    this.connection = this.appService.getNotifications().subscribe(res => {
+    this.notifications.push(res);
     });
+    this.appService.getAllNotifications().subscribe(res => this.notifications = res);
   }
 
   createForm() {
@@ -35,9 +37,8 @@ export class AppComponent implements OnInit, OnDestroy {
    if (data.title) {
     data.groups = this.groups;
     data.date = this.date;
-    this.appService.postNotification(data).subscribe(notification => {
-      this.appService.sendNotification(notification);
-    });
+    this.appService.postNotification(data)
+    .subscribe(res => res);
    }
   }
 

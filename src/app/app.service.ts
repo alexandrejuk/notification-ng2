@@ -10,7 +10,9 @@ export class AppService {
   private endpointApi = 'http://localhost:3000';
   private socket;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+    this.socket = io(this.endpointApi);
+  }
 
   postNotification(notification): Observable<any> {
     const urlApi = `${this.endpointApi}/api/notifications`;
@@ -19,19 +21,24 @@ export class AppService {
       .map(res => res.json() as any);
   }
 
-  sendNotification(notification) {
-    this.socket.emit('new-notification', notification);
+  sendUser(user) {
+    this.socket.emit('new-user-connected', user);
   }
 
   getNotifications() {
     const observable = new Observable(observer => {
-      this.socket = io(this.endpointApi);
-      this.socket.on('notigication', (data) => {
+      this.socket.on('notification', data => {
         observer.next(data);
       });
-      return () => {
-        this.socket.disconnect();
-      };
+    });
+    return observable;
+  }
+
+  getAllNotifications() {
+    const observable = new Observable(observer => {
+      this.socket.on('getNotifications', data => {
+        observer.next(data);
+      });
     });
     return observable;
   }
