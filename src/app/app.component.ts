@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from './app.service';
@@ -8,22 +8,22 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-
+export class AppComponent implements OnInit, OnDestroy {
   public form: FormGroup;
-  public calls = [];
-  public notifications;
-  public totalNotification;
-  private userName = 'Alan';
   private date = '2017-12-07T12:06:07.257Z';
-  private message = { post: 'Atendimento Criado por ', put: 'Atendimento Alterado por ' };
+  private groups = ['5a2fab1905ec6e12748e461a', '5a2fab2b05ec6e12748e461d'];
+  private connection;
+  public notifications;
 
   constructor(private fb: FormBuilder, private appService: AppService) {}
 
   ngOnInit() {
     this.createForm();
-    this.getCalls();
-    this.totalNotifications();
+    this.appService.sendUser({ id: '2', name: 'alexandre'});
+    this.connection = this.appService.getNotifications().subscribe(res => {
+    this.notifications.push(res);
+    });
+    this.appService.getAllNotifications().subscribe(res => this.notifications = res);
   }
 
   createForm() {
@@ -33,45 +33,16 @@ export class AppComponent implements OnInit {
     });
   }
 
-  getCalls() {
-    this.appService.getAllCalls().subscribe(res => this.calls = res);
+  newNotification(data) {
+   if (data.title) {
+    data.groups = this.groups;
+    data.date = this.date;
+    this.appService.postNotification(data)
+    .subscribe(res => res);
+   }
   }
 
-  getAllNotifications () {
-    this.appService.getAllNotification().subscribe(res => this.notifications = res);
-  }
-  totalNotifications () {
-    this.appService.getAllNotification().subscribe(res => {
-      if (res.length > 9) {
-        this.totalNotification = '9+';
-      }else {
-        this.totalNotification = res.length;
-      }
-    });
-  }
-
-  onSubmit(values) {
-    const userLog = {
-      createdAt: this.date,
-      createdBy: this.userName,
-      updatedAt: this.date,
-      updatedBy: this.userName
-    };
-    this.appService.postCall(Object.assign({}, values, userLog)).subscribe(res => {
-      this.calls.push(res);
-      this.pushNotification(res);
-    });
-  }
-
-  pushNotification(value) {
-    const modifyNotification = {
-      message: this.message.post,
-      id_atendimento: value.id,
-      userCreate: value.createdBy,
-      date: value.createdAt,
-      alert: 'alert-success',
-      title: value.title
-    };
-    this.appService.postNotification(modifyNotification).subscribe(res => console.log(res));
+  ngOnDestroy() {
+    this.connection.unsubscribe();
   }
 }
